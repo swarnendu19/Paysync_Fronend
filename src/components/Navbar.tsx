@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
           <li><Link to={"/test"} className="hover:text-gray-300">Test</Link></li>
           <li><Link to={"/blog"} className="hover:text-gray-300">Blog</Link></li>
         </ul>
-        <button className="hidden md:block bg-white text-purple-700 px-4 py-2 rounded">Sign In</button>
+        
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-white focus:outline-none">
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
