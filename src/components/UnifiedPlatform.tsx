@@ -1,5 +1,6 @@
 import React from 'react';
 import arrowRightLight from '../assets/arrow-right-light.svg';
+import { Link } from 'react-router-dom';
 
 const UnifiedPlatform: React.FC = () => {
   return (
@@ -29,10 +30,12 @@ const UnifiedPlatform: React.FC = () => {
             </p>
           </div>
         </div>
+        <Link to={"/installation"}> 
         <button className="mt-8 bg-purple-600 text-white px-6 py-3 rounded-full font-semibold flex items-center">
           Installation
           <img src={arrowRightLight} alt="Arrow Right" className="ml-2 h-4 w-4" />
         </button>
+        </Link>
       </div>
     </div>
   );

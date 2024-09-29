@@ -5,6 +5,7 @@ import img2 from "../assets/arrow-right-purple.svg"
 import img3 from "../assets/bars-icon.png"
 import img4 from "../assets/arrow-right-purple.svg"
 import img5 from "../assets/shield-icon.png"
+import { Link } from 'react-router-dom';
 
 const GettingStarted: React.FC = () => {
   return (
@@ -16,10 +17,12 @@ const GettingStarted: React.FC = () => {
             <p className="text-gray-600 mb-8">
               Unlock all your payment gateways in one place with <a href="#" className="text-purple-600">PaySync!</a> Simplify integration, streamline management, and switch between providers effortlessly. Start using PaySync and make handling payments easier than ever.
             </p>
+            <Link to={"/test"}>
             <button className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold flex items-center">
               Test now
               <img src={img1} alt="" className="ml-2 h-4 w-4" />
             </button>
+            </Link>
           </div>
           <div className="md:w-1/2 md:pl-12">
             <div className="grid md:grid-cols-2 gap-8">
