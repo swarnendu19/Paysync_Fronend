@@ -1,31 +1,26 @@
 import React, { useState } from "react";
 import { PaySync } from "paysync";
- 
-
-
 
 const Test: React.FC = () => {
   const [amount, setAmount] = useState<number | "">("");
   const [paymentProvider, setPaymentProvider] = useState<string>("Stripe");
- 
-
-
-const Test: React.FC = () => {
-  const [amount, setAmount] = useState<number>("");
-  const [paymentProvider, setPaymentProvider] = useState<string>("Stripe");
- 
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (amount === "" || amount <= 0) {
+      alert("Please enter a valid amount.");
+      return;
+    }
+
+    const netAmount = Number(amount) * 100; 
+
     if (paymentProvider === "Stripe") {
       const stripe = new PaySync.Stripe(
-        "sk_test_51PaUaI2MF7toLiOy7fEqmDVyn5gQGLw74VjM4JVYYLhHliC3URzxU7wDDpNaNvb2FyXQYuykqRIwcqi0udTjs0iP00Dg7iC10i"
+        import.meta.env.VITE_STRIPE_SECRET  
       );
 
-      const netAmount = amount * 100;
-
-      const checkoutDetails : any = {
+      const checkoutDetails : any= {
         payment_method_types: ["card"],
         line_items: [
           {
@@ -43,69 +38,63 @@ const Test: React.FC = () => {
         success_url: "http://localhost:5173/success",
         cancel_url: "http://localhost:5173/fail",
       };
+
       try {
         const url = await stripe.getCheckoutUrl(checkoutDetails);
-        // console.log("Generated URL:", url);
         window.location.href = url;
-      } catch (error : any) {
+      } catch (error: any) {
         console.error("Error generating URL:", error.message);
       }
-    }
-    if(paymentProvider === "Paypal"){
+    } 
+    else if (paymentProvider === "Paypal") {
       const paypalOptions = {
-        clientId: 'Aa4YmFBwkSDkZlzLw4OAf5XR6TfsimSJh_lEQlywcIMHRuPqPn0_1vS-NEjHeAf2PxuIfXMqhPT9HPdP',   
-        clientSecret: 'EJFyBM1dStTOIilXEhAzTW6asO320zY224L4j0FAyliEw1UKt0GVHr4V3NcgtfwCu21NfNUJ-qMVvL_F',   
-        sandbox: true,                       
+        clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,  
+        clientSecret: import.meta.env.VITE_PAYPAL_CLIENT_SECRET, 
+        sandbox: true,
       };
+
       const paypal = new PaySync.Paypal(paypalOptions);
 
-      const paypalPayload : any = {
-        intent: 'CAPTURE',   
+      const paypalPayload: any = {
+        intent: 'CAPTURE',
         purchase_units: [
           {
             amount: {
-              currency_code: 'USD',  // Currency code
-              value: '100.00',        // Payment amount
+              currency_code: 'USD',
+              value: (amount).toString(),   
             },
-            description: 'Your product description',  // Optional: Description of what is being purchased
+            description: 'Your product description',
           },
         ],
         application_context: {
-          brand_name: 'Your Brand Name',                
-          landing_page: 'BILLING',                     // Optional: 'LOGIN' or 'BILLING'
-          user_action: 'PAY_NOW',                      // Optional: What action button PayPal will show
-          return_url: 'http://localhost:5173/success', // Where PayPal redirects after a successful payment
-          cancel_url: 'http://localhost:5173/cancel',  // Where PayPal redirects after a canceled payment
+          brand_name: 'Your Brand Name',
+          landing_page: 'BILLING',
+          user_action: 'PAY_NOW',
+          return_url: 'http://localhost:5173/success',
+          cancel_url: 'http://localhost:5173/cancel',
         },
       };
-  
-      const approvalUrl = await paypal.getCheckoutUrl(paypalPayload);
 
+      const approvalUrl = await paypal.getCheckoutUrl(paypalPayload);
       window.location.href = approvalUrl;
-    }
-    if(paymentProvider === "Razorpay"){
+    } 
+    else if (paymentProvider === "Razorpay") {
       const razorpayInstance = new PaySync.Razorpay();
 
+      razorpayInstance.initialize({
+        apiKey: import.meta.env.VITE_RAZORPAY_API_KEY,  
+        secretKey: import.meta.env.VITE_RAZORPAY_SECRET_KEY  
+      });
 
-  razorpayInstance.initialize({
-  apiKey: "rzp_test_WykQstMmEnKNPW",
-  secretKey: "ufHGoboK7tBZazjurX5yKWos"
-  });
-
- 
-  try {
-
-    const response = await razorpayInstance.charge(1000, 'INR', {
-      name: 'Customer Name',
-      email: 'customer@example.com',
-    });
-    console.log('Razorpay charge response:', response);
-  } catch (error) {
-    //@ts-ignore
-    console.error('Razorpay error:', error.message);
-  }
- 
-
+      try {
+        const response = await razorpayInstance.charge(netAmount, 'INR', {
+          name: 'Customer Name',
+          email: 'customer@example.com',
+        });
+        console.log('Razorpay charge response:', response);
+      } catch (error: any) {
+        console.error('Razorpay error:', error.message);
+      }
     }
   };
 
@@ -138,11 +127,9 @@ const Test: React.FC = () => {
                 type="number"
                 id="amount"
                 value={amount}
-                onChange={(e) =>{
-                  setAmount(e.target.value ? parseFloat(e.target.value) : "")
-                }
-                  
-                }
+                onChange={(e) => {
+                  setAmount(e.target.value ? parseFloat(e.target.value) : "");
+                }}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                 placeholder="Enter amount"
                 required
@@ -164,7 +151,6 @@ const Test: React.FC = () => {
                 required
               >
                 <option value="Stripe">Stripe</option>
-               
                 <option value="Paypal">Paypal</option>
                 <option value="Razorpay">Razorpay</option>
               </select>
