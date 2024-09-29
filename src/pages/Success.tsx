@@ -14,7 +14,7 @@ function Success() {
             />
           </div>
           <div className="text-3xl font-semibold">
-            Successfully pai
+            Successfully paid
           </div>
         </CardContent>
       </Card>
