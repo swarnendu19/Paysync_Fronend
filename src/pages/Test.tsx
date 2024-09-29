@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { PaySync } from "paysync";
+ 
 
 
 
 const Test: React.FC = () => {
   const [amount, setAmount] = useState<number | "">("");
   const [paymentProvider, setPaymentProvider] = useState<string>("Stripe");
+ 
+
+
+const Test: React.FC = () => {
+  const [amount, setAmount] = useState<number>("");
+  const [paymentProvider, setPaymentProvider] = useState<string>("Stripe");
+ 
   
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -14,6 +22,8 @@ const Test: React.FC = () => {
       const stripe = new PaySync.Stripe(
         "sk_test_51PaUaI2MF7toLiOy7fEqmDVyn5gQGLw74VjM4JVYYLhHliC3URzxU7wDDpNaNvb2FyXQYuykqRIwcqi0udTjs0iP00Dg7iC10i"
       );
+
+      const netAmount = amount * 100;
 
       const checkoutDetails : any = {
         payment_method_types: ["card"],
@@ -24,7 +34,7 @@ const Test: React.FC = () => {
               product_data: {
                 name: "Test Product",
               },
-              unit_amount: amount,
+              unit_amount: netAmount,
             },
             quantity: 1,
           },
