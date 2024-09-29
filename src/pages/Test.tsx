@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { PaySync } from "paysync";
-import { useSetRecoilState } from "recoil";
-import { enteredAmout } from "../store/atom";
 
 
 const Test: React.FC = () => {
   const [amount, setAmount] = useState<number | "">("");
-  const setStoreAmoun = useSetRecoilState(enteredAmout)
-  const [paymentProvider, setPaymentProvider] = useState<string>("");
+  const [paymentProvider, setPaymentProvider] = useState<string>("Stripe");
+
   
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -82,7 +80,6 @@ const Test: React.FC = () => {
                 value={amount}
                 onChange={(e) =>{
                   setAmount(e.target.value ? parseFloat(e.target.value) : "")
-                  setStoreAmoun(e.target.value ? parseFloat(e.target.value) : 0)
                 }
                   
                 }
