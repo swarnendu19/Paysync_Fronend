@@ -35,8 +35,8 @@ const Test: React.FC = () => {
           },
         ],
         mode: "payment",
-        success_url: "http://localhost:5173/success",
-        cancel_url: "http://localhost:5173/fail",
+        success_url: "https://paysync-fronend.vercel.app/success",
+        cancel_url: "https://paysync-fronend.vercel.app/fail",
       };
 
       try {
@@ -70,8 +70,8 @@ const Test: React.FC = () => {
           brand_name: 'Your Brand Name',
           landing_page: 'BILLING',
           user_action: 'PAY_NOW',
-          return_url: 'http://localhost:5173/success',
-          cancel_url: 'http://localhost:5173/cancel',
+          return_url: 'https://paysync-fronend.vercel.app/success',
+          cancel_url: 'https://paysync-fronend.vercel.app/cancel',
         },
       };
 
