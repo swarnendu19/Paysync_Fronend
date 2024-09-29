@@ -40,9 +40,7 @@ const Navbar: React.FC = () => {
             </Link>
           </li>
         </ul>
-        <button className="hidden md:block bg-white text-purple-700 px-4 py-2 rounded">
-          Sign In
-        </button>
+       
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
