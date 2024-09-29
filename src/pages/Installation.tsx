@@ -31,13 +31,14 @@ const Installation: React.FC = () => {
 
           <div className="step bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-xl font-bold mb-4">Step 2: Configure Your Providers</h3>
-            <code className="code-snippet bg-gray-200 text-purple-500 py-2 px-4 rounded-md block mb-4">{`import { configurePaySync } from 'paysync';`}</code>
+            <code className="code-snippet bg-gray-200 text-purple-500 py-2 px-4 rounded-md block mb-4">{`import { PaySync } from 'paysync';`}</code>
             <p>Configure the library to connect your preferred payment gateways such as Stripe, Razorpay, and more.</p>
           </div>
 
           <div className="step bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-xl font-bold mb-4">Step 3: Initialize in Your Project</h3>
-            <code className="code-snippet bg-gray-200 text-purple-500 py-2 px-4 rounded-md block mb-4">{`const paySync = configurePaySync({ ...options });`}</code>
+            <code className="code-snippet bg-gray-200 text-purple-500 py-2 px-4 rounded-md block mb-4">{`const checkoutUrl = await stripe.generatePaymentURL(checkoutDetails);
+`}</code>
             <p>Initialize PaySync with your configurations and start managing transactions effortlessly.</p>
           </div>
         </div>
